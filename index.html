@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,11 +28,18 @@
         .navbar.scrolled { background: rgba(20, 20, 22, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 0.9rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
         .navbar .container { display: flex; justify-content: space-between; align-items: center; }
         .navbar-logo { font-family: 'Georgia', serif; font-size: 1.35rem; color: var(--gold-light); letter-spacing: 0.02em; }
+        .nav-right { display: flex; align-items: center; gap: 2.5rem; }
         .navbar-menu { display: flex; list-style: none; gap: 2.5rem; }
         .navbar-menu a { color: rgba(255, 255, 255, 0.85); font-size: 0.95rem; transition: color 0.3s var(--ease-smooth); position: relative; }
         .navbar-menu a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.4s var(--ease-out); }
         .navbar-menu a:hover { color: #fff; }
         .navbar-menu a:hover::after { width: 100%; }
+
+        /* Language Toggle */
+        .lang-toggle { display: flex; background: rgba(255,255,255,0.1); border-radius: 99px; padding: 4px; gap: 2px; border: 1px solid rgba(255,255,255,0.1); }
+        .lang-btn { background: transparent; border: none; color: rgba(255,255,255,0.7); padding: 6px 16px; border-radius: 99px; cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: all 0.3s var(--ease-out); font-family: inherit; letter-spacing: 0.05em; }
+        .lang-btn:hover { color: #fff; }
+        .lang-btn.active { background: var(--gold); color: #1d1d1f; }
 
         /* Hero */
         .hero { position: relative; height: 100vh; min-height: 700px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #0a0a0a; }
@@ -158,6 +165,7 @@
         @media (max-width: 768px) {
             section { padding: 4.5rem 0; }
             .navbar-menu { display: none; }
+            .nav-right { gap: 1rem; }
             .hero { min-height: 600px; }
             .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
             .form-row { grid-template-columns: 1fr; }
@@ -174,12 +182,18 @@
     <header class="navbar" id="navbar">
         <div class="container">
             <a href="#home" class="navbar-logo">Abdessamad Business</a>
-            <ul class="navbar-menu">
-                <li><a href="#services">Services</a></li>
-                <li><a href="#menu">Menu</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+            <div class="nav-right">
+                <ul class="navbar-menu">
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="lang-toggle">
+                    <button class="lang-btn active" data-lang="fr">FR</button>
+                    <button class="lang-btn" data-lang="ar">AR</button>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -280,7 +294,7 @@
         <div class="container">
             <div class="section-header reveal">
                 <span class="section-eyebrow">Gallery</span>
-                <h2 class="section-title">Our finest events</h2>
+                <h2 class="section-title">Our finest receptions</h2>
                 <div class="section-divider"><span>✦</span></div>
             </div>
             <div class="gallery-wrapper reveal reveal-delay-1">
@@ -404,6 +418,16 @@
 
         const tabBtns = document.querySelectorAll('.tab-btn');
         tabBtns.forEach(btn => btn.addEventListener('click', () => { tabBtns.forEach(b => b.classList.remove('active')); btn.classList.add('active'); }));
+
+        // Language Toggle
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.documentElement.lang = btn.dataset.lang;
+                document.documentElement.dir = btn.dataset.lang === 'ar' ? 'rtl' : 'ltr';
+            });
+        });
 
         // Gallery
         const track = document.getElementById('galleryTrack');
