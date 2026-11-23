@@ -1,1 +1,1 @@
-# traiteurprototype
+# traiteur-prototype
